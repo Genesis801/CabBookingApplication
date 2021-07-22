@@ -1,6 +1,17 @@
 package com.cg.mts.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
+@Entity
 public class Cab {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "cab_Sequence")
+    @SequenceGenerator(name = "cab_Sequence", sequenceName = "CAB_SEQ",initialValue = 10001)
 	private int cabId;
 	private String carType;
 	private float perKmRate;

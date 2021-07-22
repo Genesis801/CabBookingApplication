@@ -1,17 +1,27 @@
 package com.cg.mts.entities;
 
-public class Customer extends AbstractUser {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
+
+@Entity
+public class Customer extends AbstractUser{
+	
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "customer_Sequence")
+    @SequenceGenerator(name = "customer_Sequence", sequenceName = "CUSTOMER_SEQ", initialValue = 201)
 	private int customerId;
 
 	public Customer() {
 		super();
 	}
 
-	public Customer(String username, String password, String mobileNumber, String email, int customerId) {
-		super(username, password, mobileNumber, email);
-		// TODO Auto-generated constructor stub
+	
+	public Customer(long joinId, String username, String password, String mobileNumber, String email, int customerId) {
+		super(joinId, username, password, mobileNumber, email);
 		this.customerId = customerId;
 	}
+
 
 	public int getCustomerId() {
 		return customerId;

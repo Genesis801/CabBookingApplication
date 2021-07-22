@@ -1,9 +1,25 @@
 package com.cg.mts.entities;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+
+@Entity
 public class Driver extends AbstractUser {
+	
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "driver_Sequence")
+    @SequenceGenerator(name = "drive_Sequence", sequenceName = "DRIVER_SEQ", initialValue = 101)
 	private int driverId;
+	
 	private String licenseNo;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cabId")
 	private Cab cab;
+	
 	private float rating;
 	
 	public Driver() {
@@ -11,14 +27,18 @@ public class Driver extends AbstractUser {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Driver(String username, String password, String mobileNumber, String email, int driverId, String licenseNo, Cab cab, float rating) {
-		super(username, password, mobileNumber, email);
-		// TODO Auto-generated constructor stub
+	
+
+	public Driver(long joinId, String username, String password, String mobileNumber, String email, int driverId,
+			String licenseNo, Cab cab, float rating) {
+		super(joinId, username, password, mobileNumber, email);
 		this.driverId = driverId;
 		this.licenseNo = licenseNo;
 		this.cab = cab;
 		this.rating = rating;
 	}
+
+
 
 	public int getDriverId() {
 		return driverId;
