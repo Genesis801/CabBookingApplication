@@ -5,6 +5,7 @@ import java.util.List;
 import com.cg.mts.entities.Cab;
 import com.cg.mts.exception.CabNotFoundException;
 
+
 public interface ICabRepository {
 	public Cab insertCab(Cab cab);
 	public Cab updateCab(Cab cab) throws CabNotFoundException;

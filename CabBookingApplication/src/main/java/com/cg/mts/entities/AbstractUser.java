@@ -1,27 +1,40 @@
 package com.cg.mts.entities;
 
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 
-
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class AbstractUser {
+//
+//@Entity
+//@Inheritance
+@MappedSuperclass
+//@Table(name="abstract_user")
+public abstract class AbstractUser{
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "order_Sequence")
-    @SequenceGenerator(name = "order_Sequence", sequenceName = "ORDER_SEQ")
-	private long joinId;
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "abstractuser_Sequence")
+    @SequenceGenerator(name = "abstractuser_Sequence", sequenceName = "ABSTRACTUSER_SEQ")
+	private long Id;
 	
+	@Column(name="username")
 	private String username;
+	@Column(name="password")
 	private String password;
+	@Column(name="mobile_number")
 	private String mobileNumber;
+	@Column(name="email")
 	private String email;
 	
 	public AbstractUser() {
@@ -29,9 +42,9 @@ public abstract class AbstractUser {
 	}
 
 
-	public AbstractUser(long joinId, String username, String password, String mobileNumber, String email) {
+	public AbstractUser(long Id, String username, String password, String mobileNumber, String email) {
 
-		this.joinId = joinId;
+		this.Id = Id;
 		this.username = username;
 		this.password = password;
 		this.mobileNumber = mobileNumber;
@@ -39,10 +52,10 @@ public abstract class AbstractUser {
 	}
 
 
-
 	public String getUsername() {
 		return username;
 	}
+
 
 	public void setUsername(String username) {
 		this.username = username;
@@ -74,13 +87,13 @@ public abstract class AbstractUser {
 
 
 
-	public long getJoinId() {
-		return joinId;
+	public long getId() {
+		return Id;
 	}
 
 
 
-	public void setJoinId(long joinId) {
-		this.joinId = joinId;
+	public void setId(long joinId) {
+		this.Id = Id;
 	}
 }
