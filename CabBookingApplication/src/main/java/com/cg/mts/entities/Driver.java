@@ -11,12 +11,13 @@ import javax.persistence.SequenceGenerator;
 @Entity
 public class Driver extends AbstractUser {
 	
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "driver_Sequence")
-    @SequenceGenerator(name = "drive_Sequence", sequenceName = "DRIVER_SEQ", initialValue = 101)
-	private int driverId;
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "driver_Sequence")
+//    @SequenceGenerator(name = "drive_Sequence", sequenceName = "DRIVER_SEQ", initialValue = 101)
+//	private int driverId;
 	
 	private String licenseNo;
-	@OneToOne(cascade = CascadeType.ALL)
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "cabId")
 	private Cab cab;
 	
@@ -29,24 +30,24 @@ public class Driver extends AbstractUser {
 	
 	
 
-	public Driver(long joinId, String username, String password, String mobileNumber, String email, int driverId,
+	public Driver(long joinId, String username, String password, String mobileNumber, String email, 
 			String licenseNo, Cab cab, float rating) {
 		super(joinId, username, password, mobileNumber, email);
-		this.driverId = driverId;
+		//this.driverId = driverId;
 		this.licenseNo = licenseNo;
 		this.cab = cab;
 		this.rating = rating;
 	}
 
 
-
-	public int getDriverId() {
-		return driverId;
-	}
-
-	public void setDriverId(int driverId) {
-		this.driverId = driverId;
-	}
+//int driverId,
+//	public int getDriverId() {
+//		return driverId;
+//	}
+//
+//	public void setDriverId(int driverId) {
+//		this.driverId = driverId;
+//	}
 
 	public String getLicenseNo() {
 		return licenseNo;
