@@ -2,9 +2,28 @@ package com.cg.mts.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="trip")
 public class TripBooking {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "trip_Sequence")
+    @SequenceGenerator(name = "trip_Sequence", sequenceName = "TRIP_SEQ",initialValue = 101)
 	private int tripBookingId;
+	
 	private int customerId;
+	@OneToOne(cascade =  CascadeType.ALL)
+	@JoinColumn(name="Id")
 	private Driver driver;
 	private String fromLocation;
 	private String toLocation;
@@ -18,12 +37,12 @@ public class TripBooking {
 		super();
 	}
 
-	public TripBooking(int tripBookingId, int customerId, Driver driver, String fromLocation, String toLocation,
+	public TripBooking(int tripBookingId, int customerId,Driver driver, String fromLocation, String toLocation,
 			LocalDateTime fromDateTime, LocalDateTime toDateTime, boolean status, float distanceInKm, float bill) {
 		super();
 		this.tripBookingId = tripBookingId;
 		this.customerId = customerId;
-		this.driver = driver;
+		this.driver = driver; 
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
 		this.fromDateTime = fromDateTime;

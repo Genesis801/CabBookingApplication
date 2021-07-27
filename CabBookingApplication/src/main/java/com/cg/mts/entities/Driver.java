@@ -1,10 +1,13 @@
 package com.cg.mts.entities;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -12,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 public class Driver extends AbstractUser {
 	
 //	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "driver_Sequence")
-//    @SequenceGenerator(name = "drive_Sequence", sequenceName = "DRIVER_SEQ", initialValue = 101)
+//  @SequenceGenerator(name = "drive_Sequence", sequenceName = "DRIVER_SEQ", initialValue = 101)
 //	private int driverId;
 	
 	private String licenseNo;
@@ -23,6 +26,10 @@ public class Driver extends AbstractUser {
 	
 	private float rating;
 	
+	@OneToMany(targetEntity = TripBooking.class)
+	@JoinColumn(name = "tripBookingId")
+	private List<TripBooking> tripBooking;
+	
 	public Driver() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -30,14 +37,21 @@ public class Driver extends AbstractUser {
 	
 	
 
-	public Driver(long joinId, String username, String password, String mobileNumber, String email, 
-			String licenseNo, Cab cab, float rating) {
-		super(joinId, username, password, mobileNumber, email);
-		//this.driverId = driverId;
+	
+
+
+public Driver(long Id, String username, String password, String mobileNumber, String email, String licenseNo,
+			Cab cab, float rating, List<TripBooking> tripBooking) {
+		super(Id, username, password, mobileNumber, email);
 		this.licenseNo = licenseNo;
 		this.cab = cab;
 		this.rating = rating;
+		this.tripBooking = tripBooking;
 	}
+
+
+
+
 
 
 //int driverId,
@@ -72,4 +86,13 @@ public class Driver extends AbstractUser {
 	public void setRating(float rating) {
 		this.rating = rating;
 	}
+
+	public List<TripBooking> getTripBooking() {
+		return tripBooking;
+	}
+
+	public void setTripBooking(List<TripBooking> tripBooking) {
+		this.tripBooking = tripBooking;
+	}
+	
 }
