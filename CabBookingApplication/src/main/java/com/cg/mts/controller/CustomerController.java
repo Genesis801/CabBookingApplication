@@ -38,13 +38,13 @@ public class CustomerController {
 		return customerService.deleteCustomer(id);
 	}
 	
-/*	@GetMapping("/getallcustomers")
+	@GetMapping("/getallcustomers")
 	public List<Customer> getAllCustomers() {
 		return customerService.viewCustomers();
 	}
 	
 	@GetMapping("/getcustomerbyid/{customerId}")
-	public Customer getCustomerById(@PathVariable("customerId") int customerId) {
+	public Customer getCustomerById(@PathVariable("customerId") long customerId) {
 		return customerService.viewCustomer(customerId);
-	} */
+	}
 }

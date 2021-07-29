@@ -1,8 +1,11 @@
 package com.cg.mts.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,5 +36,17 @@ public class CabController {
 	@DeleteMapping("/deletecab/{id}")
 	public ResponseEntity<Cab> deleteCab(@RequestBody Cab cab, @PathVariable("id") int id){
 		return iCabService.deleteCab(cab, id);
+	}
+	
+	@GetMapping("/viewcabstype/{id}")
+	public List<Cab> viewCabsOfType(@PathVariable("id")String type) {
+		// TODO Auto-generated method stub
+		return iCabService.viewCabsOfType(type);
+	}
+	
+	@GetMapping("/countcabs/{type}")
+	public int countCabsOfType(@PathVariable("type")String type) {
+		// TODO Auto-generated method stub
+		return iCabService.countCabsOfType(type);
 	}
 }

@@ -25,7 +25,7 @@ public class LoginController {
 		return loginService.LoginAdmin(admin);
 	}
 	
-	@PostMapping("/user")
+	@PostMapping("/customer")
 	public String userLogin(@RequestBody Customer customer) {
 		
 		return loginService.LoginUser(customer);

@@ -1,25 +1,41 @@
 package com.cg.mts.service;
 
-import java.time.LocalDateTime;
+
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.cg.mts.entities.AbstractUser;
+
 import com.cg.mts.entities.Admin;
+import com.cg.mts.entities.Customer;
+import com.cg.mts.entities.Driver;
 import com.cg.mts.entities.TripBooking;
 import com.cg.mts.exception.AdminNotFoundException;
-import com.cg.mts.repository.IAbstractUserRepository;
 import com.cg.mts.repository.IAdminRepository;
-//import com.cg.mts.repository.IAdminRepository;
+import com.cg.mts.repository.ICustomerRepository;
+import com.cg.mts.repository.IDriverRepository;
+import com.cg.mts.repository.ITripBookingRepository;
+
 @Service
 public class AdminService implements IAdminService{
 
 	@Autowired
 	private IAdminRepository adminRepository;
-	//private IAbstractUserRepository iAbstractUserRepository;
+	
+	@Autowired
+	private ICustomerRepository customerRepository;
+	
+	@Autowired
+	private IDriverRepository driverRepository;
+	
+	@Autowired
+	private ITripBookingRepository iTripBookingRepository;
+	
+	DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");  
 	
 	@Override
 	public Admin insertAdmin(Admin admin) {
@@ -49,33 +65,67 @@ public class AdminService implements IAdminService{
 	}
 
 	@Override
-	public List<TripBooking> getAllTrips(int customerId) {
+	public List<TripBooking> getAllTrips() {
 		// TODO Auto-generated method stub
-		return null;
+		List<TripBooking> tripList = iTripBookingRepository.findAll();
+		return tripList;
 	}
 
 	@Override
-	public List<TripBooking> getTripsCabwise() {
+	public List<TripBooking> getTripsCabwise(int cabId) {
 		// TODO Auto-generated method stub
-		return null;
+		List<TripBooking> tripList = new ArrayList<TripBooking>();
+		List<Driver> findAllDriver = driverRepository.findAll();
+		for(int i=0; i<findAllDriver.size();i++) {
+			if(findAllDriver.get(i).getCab().getCabId() == cabId) {
+				tripList.add(findAllDriver.get(i).getTripBooking());
+			}
+		}
+		return tripList;
 	}
 
 	@Override
-	public List<TripBooking> getTripsCustomerwise() {
+	public List<TripBooking> getTripsCustomerwise(long customerId) {
 		// TODO Auto-generated method stub
-		return null;
+		List<TripBooking> tripList = new ArrayList<TripBooking>();
+		List<Customer> findAllCustomer = customerRepository.findAll();
+		for(int i=0; i<findAllCustomer.size(); i++) {
+			if(findAllCustomer.get(i).getId() == customerId) {
+				tripList.add(findAllCustomer.get(i).getTripBooking());
+			}
+		}
+		
+		return tripList;
 	}
 
 	@Override
-	public List<TripBooking> getTripsDatewise() {
+	public List<TripBooking> getTripsDatewise(String date) {
 		// TODO Auto-generated method stub
-		return null;
+		List<TripBooking> tripList = iTripBookingRepository.findAll();
+		List<TripBooking> tripList_1 = new ArrayList<TripBooking>();
+		
+		for(int i=0; i<tripList.size(); i++) {
+			String formatDateTime = tripList.get(i).getFromDateTime().format(format);
+			if(formatDateTime.equals(date)){
+				tripList_1.add(tripList.get(i));
+			}
+		}
+		return tripList_1;
 	}
 
 	@Override
-	public List<TripBooking> getAllTripsForDays(int customerId, LocalDateTime fromDate, LocalDateTime toDate) {
+	public List<TripBooking>getAllTripsForDays(long customerId, String fromDate, String toDate) {
 		// TODO Auto-generated method stub
-		return null;
+		List<TripBooking> findAllTrip = iTripBookingRepository.findAll();
+		List<TripBooking> tripList = new ArrayList<TripBooking>();
+		for(int i=0; i<findAllTrip.size(); i++) {
+			if(findAllTrip.get(i).getCustomerId() == customerId) {
+				if(findAllTrip.get(i).getFromDateTime().format(format).equals(fromDate) && findAllTrip.get(i).getToDateTime().format(format).equals(toDate)) {
+					tripList.add(findAllTrip.get(i));
+				}
+			}
+		}
+		
+		return tripList;
 	}
-
 }
