@@ -34,13 +34,12 @@ public class CabService implements ICabService{
 	}
 
 	@Override
-	public ResponseEntity<Cab> deleteCab(Cab cab, int id) {
+	public ResponseEntity<Cab> deleteCab(int id) {
 		// TODO Auto-generated method stub
 		Cab cb = iCabRepository.findById(id).orElseThrow(()-> new CabNotFoundException("Cab not found."));
 		iCabRepository.delete(cb);
 		return ResponseEntity.ok().build();
 	}
-
 	@Override
 	public List<Cab> viewCabsOfType(String carType) {
 		// TODO Auto-generated method stub
